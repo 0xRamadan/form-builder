@@ -109,3 +109,31 @@ export async function GetForms(): Promise<ActionResponse<Form[]>> {
         return response
     }
 }
+
+export async function GetFormById(id: number): Promise<ActionResponse<Form>> {
+
+    const response: ActionResponse<Form> = {
+        data: null,
+        error: null
+    }
+
+    const user = await currentUser();
+    if (!user) {
+        response.error = "unauthorized user access"
+        return response
+    }
+
+    try {
+        const form = await prisma.form.findUnique({
+            where: {
+                userId: user.id,
+                id
+            }
+        })
+        response.data = form
+        return response
+    } catch (error) {
+        response.error = "Couldn't find form with this id."
+        return response
+    }
+}

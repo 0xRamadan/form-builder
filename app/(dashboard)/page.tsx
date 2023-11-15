@@ -140,7 +140,7 @@ function FormCard({ form }: { form: Form }) {
       <CardFooter>
         {form.published ? (
           <Button asChild className="w-full mt-2 text-md gap-4">
-            <span>View submissions <BiRightArrowAlt /></span>
+            <Link href={`/builder/${form.id}`}>View submissions <BiRightArrowAlt /></Link>
           </Button>
         ) : (
           <Button
@@ -148,7 +148,7 @@ function FormCard({ form }: { form: Form }) {
             variant={"secondary"}
             className="w-full mt-2 text-md gap-4"
           >
-            <span>Edit form <FaEdit /></span>
+            <Link href={`/forms/${form.id}`}>Edit form <FaEdit /></Link>
           </Button>
         )}
       </CardFooter>
