@@ -26,13 +26,11 @@ export const TextFieldFormElement: FormElement = {
     label: "Text Field",
   },
 
-  designerComponent: DesignerComponent,
-
+  designAreaComponent: DesignerComponent,
   formComponent: FormComponent,
-  
   propertiesComponent: PropertiesComponent,
 };
 
-function DesignerComponent({ elementInstance }: {elementInstance : FormElementInstance}) {}
-function FormComponent({ elementInstance }: {elementInstance : FormElementInstance}) {}
-function PropertiesComponent({ elementInstance }: {elementInstance : FormElementInstance}) {}
+function DesignerComponent({ elementInstance }: {elementInstance : FormElementInstance}) {return <div>design component</div>}
+function FormComponent({ elementInstance }: {elementInstance : FormElementInstance}) {return <div>form component</div>}
+function PropertiesComponent({ elementInstance }: {elementInstance : FormElementInstance}) {return <div>properties component</div>}

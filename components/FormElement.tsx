@@ -2,16 +2,16 @@ import { TextFieldFormElement } from "./fields/TextField";
 
 export type ElementsType =
   | "TextField"
-  | "TitleField"
-  | "SubTitleField"
-  | "ParagraphField"
-  | "SeparatorField"
-  | "SpacerField"
-  | "NumberField"
-  | "TextAreaField"
-  | "DateField"
-  | "SelectField"
-  | "CheckboxField";
+  // | "TitleField"
+  // | "SubTitleField"
+  // | "ParagraphField"
+  // | "SeparatorField"
+  // | "SpacerField"
+  // | "NumberField"
+  // | "TextAreaField"
+  // | "DateField"
+  // | "SelectField"
+  // | "CheckboxField";
 
 export type FormElement = {
   type: ElementsType;

@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
-import DesignDropArea from "./DesignDropArea"
-import DesignSidebarArea from "./DesignSidebarArea"
+import DesignDropArea from "./DesignDropArea";
+import DesignSidebarArea from "./DesignSidebarArea";
 
 const DesignArea = () => {
   return (
     <div className="flex w-full h-full">
-      <DesignDropArea/>
-      <DesignSidebarArea/>
+      <DesignDropArea />
+      <DesignSidebarArea />
     </div>
-  )
-}
+  );
+};
 
-export default DesignArea
+export default DesignArea;
