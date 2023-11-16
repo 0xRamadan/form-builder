@@ -1,11 +1,14 @@
 import { GetFormById } from "@/actions/forms";
+import FormBuilder from "@/components/FormBuilder";
 
-const FormBuilderPage = async ({ formId }: { formId: string }) => {
-  const { data: form, error } = await GetFormById(Number(formId));
+const BuilderPage = async ({ params }: { params: { id: string } }) => {
+  const { id } = params;
 
-  if (!form) throw new Error(error!);
+  const { data: form, error } = await GetFormById(Number(id));
 
-  return <div>{form.name}</div>;
+  if (!form) throw new Error(error);
+
+  return <FormBuilder form={form} />;
 };
 
-export default FormBuilderPage;
+export default BuilderPage;

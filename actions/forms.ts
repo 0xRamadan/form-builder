@@ -37,14 +37,14 @@ export async function GetFormStats() {
 
 interface ActionResponse<T> {
     data: null | T;
-    error: null | string;
+    error: string | undefined;
 }
 
 export async function CreateForm(data: formSchemaType): Promise<ActionResponse<number>> {
 
     const response: ActionResponse<number> = {
         data: null,
-        error: null
+        error: undefined
     }
 
     const validation = formSchema.safeParse(data);
@@ -55,7 +55,7 @@ export async function CreateForm(data: formSchemaType): Promise<ActionResponse<n
 
     const user = await currentUser();
     if (!user) {
-        response.error = "unauthorized"
+        response.error = "Unauthorized access for user."
         return response
     }
 
@@ -82,12 +82,12 @@ export async function GetForms(): Promise<ActionResponse<Form[]>> {
 
     const response: ActionResponse<Form[]> = {
         data: null,
-        error: null
+        error: undefined
     }
 
     const user = await currentUser();
     if (!user) {
-        response.error = "unauthorized"
+        response.error = "Unauthorized access for user."
         return response
     }
 
@@ -114,12 +114,12 @@ export async function GetFormById(id: number): Promise<ActionResponse<Form>> {
 
     const response: ActionResponse<Form> = {
         data: null,
-        error: null
+        error: undefined
     }
 
     const user = await currentUser();
     if (!user) {
-        response.error = "unauthorized user access"
+        response.error = "Unauthorized access for user."
         return response
     }
 
@@ -128,11 +128,12 @@ export async function GetFormById(id: number): Promise<ActionResponse<Form>> {
             where: {
                 userId: user.id,
                 id
-            }
+            },
         })
         response.data = form
         return response
     } catch (error) {
+        console.log(error)
         response.error = "Couldn't find form with this id."
         return response
     }
