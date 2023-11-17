@@ -104,7 +104,6 @@ function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
   });
 
 
-
   const DesignerElement = FormElements[element.type].designAreaComponent;
 
   return (
@@ -120,7 +119,7 @@ function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
       setMouseIsOver(false);
     }}
     onClick={(e) => {
-      e.stopPropagation();
+      e.stopPropagation(); // this is used because on the click on the remove button triggers the element selection.
       setSelectedElement(element);
     }}
   >

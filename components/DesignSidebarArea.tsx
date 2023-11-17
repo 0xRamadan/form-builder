@@ -1,13 +1,17 @@
-import { FormElements } from "./FormElement"
-import SidebarBtnElement from "./SidebarBtnElement"
+import { FormElements } from "./FormElement";
+import FormElementsSidebar from "./FormElementsSidebar";
+import PropertiesFormSidebar from "./PropertiesFormSidebar";
+import useDesigner from "./hooks/useDesigner";
 
 const DesignSidebarArea = () => {
+  const {selectedElement} = useDesigner();
+  
   return (
     <aside className="w-[400px] max-w-[400px] flex flex-col flex-grow gap-2 border-l-2 border-muted p-4 bg-background overflow-y-auto h-full">
-        <div className="text-sm p-4">Elements</div>
-        <SidebarBtnElement formElement={FormElements.TextField}/>
+      {!selectedElement && <FormElementsSidebar />}
+      {selectedElement && <PropertiesFormSidebar />}
     </aside>
-  )
-}
+  );
+};
 
-export default DesignSidebarArea
+export default DesignSidebarArea;

@@ -10,8 +10,6 @@ import DragOverlayWrapper from "./DragOverlayWrapper";
 
 const FormBuilder = ({ form }: { form: Form }) => {
 
-
-
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: {
       distance: 10, // 10px
