@@ -7,7 +7,15 @@ import { Input } from "../ui/input";
 import { z } from "zod";
 import useDesigner from "../hooks/useDesigner";
 import { useForm } from "react-hook-form";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { Switch } from "../ui/switch";
@@ -77,7 +85,20 @@ function FormComponent({
 }: {
   elementInstance: FormElementInstance;
 }) {
-  return <div>form component</div>;
+  const element = elementInstance as CustomInstance;
+  const { label, helperText, required, placeHolder } = element.extraAttributes;
+  return (
+    <div className="flex flex-col gap-2 w-full">
+      <Label>
+        {required && <span className="text-red-500">* </span>}
+        {label}
+      </Label>
+      <Input placeholder={placeHolder} />
+      {helperText && (
+        <p className="text-muted-foreground text-[0.8rem]">{helperText}</p>
+      )}
+    </div>
+  );
 }
 
 type propertiesFormSchemaType = z.infer<typeof propertiesSchema>;
