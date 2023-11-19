@@ -5,7 +5,7 @@ import DesignSidebarArea from "./DesignSidebarArea";
 
 const DesignArea = () => {
   return (
-    <div className="flex w-full h-full">
+    <div className="flex h-full w-full">
       <DesignDropArea />
       <DesignSidebarArea />
     </div>

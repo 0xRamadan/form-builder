@@ -48,6 +48,7 @@
     "next": "14.0.2",
     "next-themes": "^0.2.1",
     "react": "^18",
+    "react-confetti": "^6.1.0",
     "react-day-picker": "^8.9.1",
     "react-dom": "^18",
     "react-hook-form": "^7.48.2",
@@ -64,6 +65,8 @@
     "eslint": "^8",
     "eslint-config-next": "14.0.2",
     "postcss": "^8",
+    "prettier": "^3.1.0",
+    "prettier-plugin-tailwindcss": "^0.5.7",
     "prisma": "^5.5.2",
     "tailwindcss": "^3.3.0",
     "typescript": "^5"
