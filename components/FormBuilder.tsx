@@ -7,8 +7,16 @@ import PublishFormBtn from "./PublishFormBtn";
 import DesignArea from "./DesignArea";
 import { DndContext, MouseSensor, TouchSensor, useSensor, useSensors } from "@dnd-kit/core";
 import DragOverlayWrapper from "./DragOverlayWrapper";
+import {ImSpinner2} from "react-icons/im"
+import { useEffect, useState } from "react";
+import useDesigner from "./hooks/useDesigner";
+
+
 
 const FormBuilder = ({ form }: { form: Form }) => {
+
+  const [isReady, setIsReady] = useState<boolean>(false);
+  const {setElements, setSelectedElement} = useDesigner();
 
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: {
@@ -27,6 +35,26 @@ const FormBuilder = ({ form }: { form: Form }) => {
   // create sensors in order to differentiate between "click" and "drag".
   const sensors = useSensors(mouseSensor, touchSensor);
   
+  useEffect(() => {
+    if (isReady) return;
+
+    const elements = JSON.parse(form.content);
+    setElements(elements);
+    setSelectedElement(null);
+
+    const readyTimeout = setTimeout(() => setIsReady(true), 500);
+
+    return () => clearTimeout(readyTimeout);
+  }, [form, setElements, isReady, setSelectedElement]);
+
+  if (!isReady) {
+    return (
+      <div className="flex flex-col items-center justify-center w-full h-full">
+        <ImSpinner2 className="animate-spin h-12 w-12" />
+      </div>
+    );
+  }
+
   return (
     <DndContext sensors={sensors}>
       <main className="flex flex-col w-full">
@@ -37,7 +65,7 @@ const FormBuilder = ({ form }: { form: Form }) => {
           </h2>
           <div className="flex items-center gap-2">
             <PreviewDialogBtn />
-            <SaveFormBtn />
+            <SaveFormBtn id={form.id}/>
             <PublishFormBtn />
           </div>
         </nav>

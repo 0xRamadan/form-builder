@@ -133,8 +133,39 @@ export async function GetFormById(id: number): Promise<ActionResponse<Form>> {
         response.data = form
         return response
     } catch (error) {
-        console.log(error)
         response.error = "Couldn't find form with this id."
         return response
     }
+}
+
+export async function UpdateFormContent(id: number, jsonContent: string): Promise<ActionResponse<Form>> {
+
+    const response: ActionResponse<Form> = {
+        data: null,
+        error: undefined
+    }
+
+    const user = await currentUser();
+    if (!user) {
+        response.error = "Unauthorized access for user."
+        return response
+    }
+
+    try {
+        const form = await prisma.form.update({
+            where: {
+                userId: user.id,
+                id,
+            },
+            data: {
+                content: jsonContent,
+            },
+        });
+        response.data = form
+        return response
+    } catch (error) {
+        response.error = "Couldn't find form with this id."
+        return response
+    }
+
 }
