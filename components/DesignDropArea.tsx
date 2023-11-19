@@ -13,7 +13,7 @@ import { Button } from "./ui/button";
 import { BiSolidTrash } from "react-icons/bi";
 
 const DesignDropArea = () => {
-  const { elements, addElement, removeElement } = useDesigner();
+  const { elements, addElement, selectedElement, setSelectedElement, removeElement } = useDesigner();
 
   const droppable = useDroppable({
     id: "designer-drop-area",
@@ -28,8 +28,7 @@ const DesignDropArea = () => {
       if (!active || !over) return;
 
       const isDesignBtnElement = active.data?.current?.isDesignBtnElement;
-      const isDroppingOverDesignDropArea =
-        over.data?.current?.isDesignDropArea;
+      const isDroppingOverDesignDropArea = over.data?.current?.isDesignDropArea;
 
       const droppingSidebarBtnOverDesignDropArea =
         isDesignBtnElement && isDroppingOverDesignDropArea;
@@ -44,7 +43,7 @@ const DesignDropArea = () => {
         addElement(elements.length, newElement);
         return;
       }
-      
+
       const isDroppingOverDesignerElementTopHalf =
         over.data?.current?.isTopHalfDesignerElement;
 
@@ -111,12 +110,16 @@ const DesignDropArea = () => {
 
         addElement(indexForNewElement, activeElement);
       }
-
     },
   });
 
   return (
-    <div className="p-4 w-full">
+    <div
+      className="p-4 w-full"
+      onClick={() => {
+        if (selectedElement) setSelectedElement(null);
+      }}
+    >
       <div
         ref={droppable.setNodeRef}
         className={cn(
@@ -124,7 +127,7 @@ const DesignDropArea = () => {
           droppable.isOver && "ring-4 ring-primary ring-inset"
         )}
       >
-        {droppable.isOver && (
+        {droppable.isOver && elements.length === 0 && (
           <div className="w-full p-4">
             <div className="h-[120px] rounded-md bg-primary/20"></div>
           </div>
