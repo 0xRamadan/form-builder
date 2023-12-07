@@ -24,6 +24,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { Switch } from "../ui/switch";
+import { cn } from "@/lib/utils";
 
 const type: ElementsType = "TextField";
 
@@ -58,6 +59,14 @@ export const TextFieldFormElement: FormElement = {
   designAreaComponent: DesignerComponent,
   formComponent: FormComponent,
   propertiesComponent: PropertiesComponent,
+  validate: (formElement: FormElementInstance, currentValue: string): boolean => {
+    const element = formElement as CustomInstance;
+    if (element.extraAttributes.required) {
+      return currentValue.length > 0;
+    }
+
+    return true;
+  },
 };
 
 type CustomInstance = FormElementInstance & {
@@ -88,31 +97,44 @@ function DesignerComponent({
 function FormComponent({
   elementInstance,
   submitValue,
+  isInvalid,
+  defaultValue,
 }: {
   elementInstance: FormElementInstance;
   submitValue?: SubmitFunction;
+  isInvalid?: boolean;
+  defaultValue?: string;
 }) {
   const element = elementInstance as CustomInstance;
-  const [value, setValue] = useState("");
-  
+  const [value, setValue] = useState(defaultValue || "");
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    setError(isInvalid === true);
+  }, [isInvalid]);
+
   const { label, helperText, required, placeHolder } = element.extraAttributes;
   return (
     <div className="flex w-full flex-col gap-2">
-      <Label>
+      <Label className={cn(error && "text-red-500")}>
         {required && <span className="text-red-500">* </span>}
         {label}
       </Label>
       <Input
+        className={cn(error && "text-red-500")}
         placeholder={placeHolder}
         onChange={(e) => setValue(e.target.value)}
         onBlur={(e) => {
           if (!submitValue) return;
+          const valid = TextFieldFormElement.validate(element, e.target.value);
+          setError(!valid);
+          if (!valid) return;
           submitValue(element.id, e.target.value);
         }}
         value={value}
       />
       {helperText && (
-        <p className="text-[0.8rem] text-muted-foreground">{helperText}</p>
+        <p className={cn("text-muted-foreground text-[0.8rem]", error && "text-red-500")}>{helperText}</p>
       )}
     </div>
   );
