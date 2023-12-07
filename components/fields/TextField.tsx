@@ -1,7 +1,12 @@
 "use client";
 
 import { MdTextFields } from "react-icons/md";
-import { ElementsType, FormElement, FormElementInstance } from "../FormElement";
+import {
+  ElementsType,
+  FormElement,
+  FormElementInstance,
+  SubmitFunction,
+} from "../FormElement";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { z } from "zod";
@@ -17,7 +22,7 @@ import {
   FormMessage,
 } from "../ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Switch } from "../ui/switch";
 
 const type: ElementsType = "TextField";
@@ -67,14 +72,14 @@ function DesignerComponent({
   const element = elementInstance as CustomInstance;
   const { label, helperText, required, placeHolder } = element.extraAttributes;
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div className="flex w-full flex-col gap-2">
       <Label>
         {required && <span className="text-red-500">* </span>}
         {label}
       </Label>
       <Input readOnly disabled placeholder={placeHolder} />
       {helperText && (
-        <p className="text-muted-foreground text-[0.8rem]">{helperText}</p>
+        <p className="text-[0.8rem] text-muted-foreground">{helperText}</p>
       )}
     </div>
   );
@@ -82,20 +87,32 @@ function DesignerComponent({
 
 function FormComponent({
   elementInstance,
+  submitValue,
 }: {
   elementInstance: FormElementInstance;
+  submitValue?: SubmitFunction;
 }) {
   const element = elementInstance as CustomInstance;
+  const [value, setValue] = useState("");
+  
   const { label, helperText, required, placeHolder } = element.extraAttributes;
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div className="flex w-full flex-col gap-2">
       <Label>
         {required && <span className="text-red-500">* </span>}
         {label}
       </Label>
-      <Input placeholder={placeHolder} />
+      <Input
+        placeholder={placeHolder}
+        onChange={(e) => setValue(e.target.value)}
+        onBlur={(e) => {
+          if (!submitValue) return;
+          submitValue(element.id, e.target.value);
+        }}
+        value={value}
+      />
       {helperText && (
-        <p className="text-muted-foreground text-[0.8rem]">{helperText}</p>
+        <p className="text-[0.8rem] text-muted-foreground">{helperText}</p>
       )}
     </div>
   );

@@ -1,17 +1,18 @@
 import { TextFieldFormElement } from "./fields/TextField";
 
-export type ElementsType =
-  | "TextField"
-  // | "TitleField"
-  // | "SubTitleField"
-  // | "ParagraphField"
-  // | "SeparatorField"
-  // | "SpacerField"
-  // | "NumberField"
-  // | "TextAreaField"
-  // | "DateField"
-  // | "SelectField"
-  // | "CheckboxField";
+export type ElementsType = "TextField";
+// | "TitleField"
+// | "SubTitleField"
+// | "ParagraphField"
+// | "SeparatorField"
+// | "SpacerField"
+// | "NumberField"
+// | "TextAreaField"
+// | "DateField"
+// | "SelectField"
+// | "CheckboxField";
+
+export type SubmitFunction = (key: string, value: string) => void;
 
 export type FormElement = {
   type: ElementsType;
@@ -23,9 +24,12 @@ export type FormElement = {
     label: string;
   };
 
-  designAreaComponent: React.FC<{elementInstance: FormElementInstance}>;
-  formComponent: React.FC<{elementInstance: FormElementInstance}>;
-  propertiesComponent: React.FC<{elementInstance: FormElementInstance}>;
+  designAreaComponent: React.FC<{ elementInstance: FormElementInstance }>;
+  formComponent: React.FC<{
+    elementInstance: FormElementInstance;
+    submitValue?: SubmitFunction;
+  }>;
+  propertiesComponent: React.FC<{ elementInstance: FormElementInstance }>;
 };
 
 export type FormElementInstance = {
