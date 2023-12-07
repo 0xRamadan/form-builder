@@ -31,7 +31,7 @@ interface StatsCardProps {
   className: string;
 }
 
-const StatsCard = ({
+export const StatsCard = ({
   title,
   icon,
   helperText,

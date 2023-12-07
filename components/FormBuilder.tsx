@@ -69,7 +69,7 @@ const FormBuilder = ({ form }: { form: Form }) => {
   if (form.published) {
     
     // try to make it a separate component, notice that you use useRouter which is only work on server component
-    // so try make it a server component.
+    // so try make it a server component. 
     return (
       <>
         <Confetti
