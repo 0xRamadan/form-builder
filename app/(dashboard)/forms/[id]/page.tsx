@@ -85,6 +85,6 @@ export default FormDetailPage;
 
 function SubmissionsTable({id}:{id: number}) {
   return (
-    <div></div>
+    <div>submissions</div>
   )
 }
