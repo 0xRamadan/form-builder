@@ -1,3 +1,4 @@
+"use "
 import { GetFormById, GetFormWithSubmissions } from "@/actions/forms";
 import FormLinkShare from "@/components/FormLinkShare";
 import VisitBtn from "@/components/VisitBtn";
@@ -18,7 +19,8 @@ import {
 } from "@/components/ui/table";
 import { format, formatDistance } from "date-fns";
 import { Badge } from "@/components/ui/badge";
-import { Checkbox } from "@radix-ui/react-checkbox";
+import { Checkbox } from "@/components/ui/checkbox";
+
 
 const FormDetailPage = async ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -187,6 +189,7 @@ async function SubmissionsTable({ id }: { id: number }) {
 
 function RowCell({ type, value }: { type: ElementsType; value: string }) {
   let node: ReactNode = value;
+
   switch (type) {
     case "DateField":
       if (!value) break;
