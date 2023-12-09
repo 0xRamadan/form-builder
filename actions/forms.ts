@@ -3,6 +3,7 @@ import prisma from "@/lib/prisma";
 import { formSchema, formSchemaType } from "@/schemas/form";
 import { currentUser } from "@clerk/nextjs";
 import { Form } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 import { string } from "zod";
 
 
@@ -71,6 +72,7 @@ export async function CreateForm(data: formSchemaType): Promise<ActionResponse<n
         });
 
         response.data = form.id
+        revalidatePath("/");
         return response
     } catch (error) {
         response.error = "Something went wrong, couldn't create the form."
