@@ -3,37 +3,37 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { LuHeading1 } from "react-icons/lu";
+import { LuHeading2 } from "react-icons/lu";
 import { z } from "zod";
 import {
-  ElementsType,
-  FormElement,
-  FormElementInstance,
-  SubmitFunction,
+    ElementsType,
+    FormElement,
+    FormElementInstance,
+    SubmitFunction,
 } from "../FormElement";
 import useDesigner from "../hooks/useDesigner";
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 
-const type: ElementsType = "TitleField";
+const type: ElementsType = "SubTitleField";
 
 const extraAttributes = {
-  title: "Title field",
+  title: "SubTitle field",
 };
 
 const propertiesSchema = z.object({
   title: z.string().min(2).max(50),
 });
 
-export const TitleFieldFormElement: FormElement = {
+export const SubTitleFieldFormElement: FormElement = {
   type,
 
   construct: (id: string) => ({
@@ -43,8 +43,8 @@ export const TitleFieldFormElement: FormElement = {
   }),
 
   designBtnElement: {
-    icon: LuHeading1,
-    label: "Title Field",
+    icon: LuHeading2,
+    label: "SubTitle Field",
   },
 
   designAreaComponent: DesignerComponent,
@@ -66,8 +66,8 @@ function DesignerComponent({
   const { title } = element.extraAttributes;
   return (
     <div className="flex w-full flex-col gap-2">
-      <Label className="text-muted-foreground">Title field</Label>
-      <p className="text-xl">{title}</p>
+      <Label className="text-muted-foreground">SubTitle field</Label>
+      <p className="text-lg">{title}</p>
     </div>
   );
 }
@@ -81,7 +81,7 @@ function FormComponent({
   const element = elementInstance as CustomInstance;
 
   const { title } = element.extraAttributes;
-  return <p className="text-xl">{title}</p>;
+  return <p className="text-lg">{title}</p>;
 }
 
 type propertiesFormSchemaType = z.infer<typeof propertiesSchema>;
@@ -131,7 +131,7 @@ function PropertiesComponent({
           name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Title</FormLabel>
+              <FormLabel>SubTitle</FormLabel>
               <FormControl>
                 <Input
                   {...field}

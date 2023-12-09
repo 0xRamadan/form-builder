@@ -1,55 +1,49 @@
 "use client";
 
+import { ElementsType, FormElement, FormElementInstance } from "../FormElement";
+import { Label } from "../ui/label";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { LuHeading1 } from "react-icons/lu";
-import { z } from "zod";
-import {
-  ElementsType,
-  FormElement,
-  FormElementInstance,
-  SubmitFunction,
-} from "../FormElement";
 import useDesigner from "../hooks/useDesigner";
+
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from "../ui/form";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
+import { BsTextParagraph } from "react-icons/bs";
+import { Textarea } from "../ui/textarea";
 
-const type: ElementsType = "TitleField";
+const type: ElementsType = "ParagraphField";
 
 const extraAttributes = {
-  title: "Title field",
+  text: "Text here",
 };
 
 const propertiesSchema = z.object({
-  title: z.string().min(2).max(50),
+  text: z.string().min(2).max(500),
 });
 
-export const TitleFieldFormElement: FormElement = {
+export const ParagraphFieldFormElement: FormElement = {
   type,
-
   construct: (id: string) => ({
     id,
     type,
     extraAttributes,
   }),
-
   designBtnElement: {
-    icon: LuHeading1,
-    label: "Title Field",
+    icon: BsTextParagraph,
+    label: "Paragraph field",
   },
-
   designAreaComponent: DesignerComponent,
   formComponent: FormComponent,
   propertiesComponent: PropertiesComponent,
+
   validate: () => true,
 };
 
@@ -63,11 +57,11 @@ function DesignerComponent({
   elementInstance: FormElementInstance;
 }) {
   const element = elementInstance as CustomInstance;
-  const { title } = element.extraAttributes;
+  const { text } = element.extraAttributes;
   return (
     <div className="flex w-full flex-col gap-2">
-      <Label className="text-muted-foreground">Title field</Label>
-      <p className="text-xl">{title}</p>
+      <Label className="text-muted-foreground">Paragraph field</Label>
+      <p className="truncate">{text}</p>
     </div>
   );
 }
@@ -76,15 +70,15 @@ function FormComponent({
   elementInstance,
 }: {
   elementInstance: FormElementInstance;
-  submitValue?: SubmitFunction;
 }) {
   const element = elementInstance as CustomInstance;
 
-  const { title } = element.extraAttributes;
-  return <p className="text-xl">{title}</p>;
+  const { text } = element.extraAttributes;
+  return <p className="text-muted-foreground">{text}</p>;
 }
 
 type propertiesFormSchemaType = z.infer<typeof propertiesSchema>;
+
 function PropertiesComponent({
   elementInstance,
 }: {
@@ -92,14 +86,11 @@ function PropertiesComponent({
 }) {
   const element = elementInstance as CustomInstance;
   const { updateElement } = useDesigner();
-
-  const { title } = element.extraAttributes;
-
   const form = useForm<propertiesFormSchemaType>({
     resolver: zodResolver(propertiesSchema),
     mode: "onBlur",
     defaultValues: {
-      title,
+      text: element.extraAttributes.text,
     },
   });
 
@@ -108,11 +99,11 @@ function PropertiesComponent({
   }, [element, form]);
 
   function applyChanges(values: propertiesFormSchemaType) {
-    const { title } = values;
+    const { text } = values;
     updateElement(element.id, {
       ...element,
       extraAttributes: {
-        title,
+        text,
       },
     });
   }
@@ -128,12 +119,13 @@ function PropertiesComponent({
       >
         <FormField
           control={form.control}
-          name="title"
+          name="text"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Title</FormLabel>
+              <FormLabel>Text</FormLabel>
               <FormControl>
-                <Input
+                <Textarea
+                  rows={5}
                   {...field}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") e.currentTarget.blur();

@@ -8,8 +8,17 @@ import { FaWpforms } from "react-icons/fa";
 import { HiCursorClick } from "react-icons/hi";
 import { TbArrowBounce } from "react-icons/tb";
 import { ElementsType, FormElementInstance } from "@/components/FormElement";
-import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
-import { formatDistance } from "date-fns";
+import {
+  Table,
+  TableHeader,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+} from "@/components/ui/table";
+import { format, formatDistance } from "date-fns";
+import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@radix-ui/react-checkbox";
 
 const FormDetailPage = async ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -96,7 +105,6 @@ type Row = { [key: string]: string } & {
   submittedAt: Date;
 };
 
-
 async function SubmissionsTable({ id }: { id: number }) {
   const form = await GetFormWithSubmissions(id);
 
@@ -110,6 +118,11 @@ async function SubmissionsTable({ id }: { id: number }) {
   formElements.forEach((element) => {
     switch (element.type) {
       case "TextField":
+      case "NumberField":
+      case "TextAreaField":
+      case "DateField":
+      case "SelectField":
+      case "CheckboxField":
         columns.push({
           id: element.id,
           label: element.extraAttributes?.label,
@@ -122,7 +135,6 @@ async function SubmissionsTable({ id }: { id: number }) {
     }
   });
 
-
   const rows: Row[] = [];
   form.FormSubmissions.forEach((submission) => {
     const content = JSON.parse(submission.content);
@@ -132,11 +144,9 @@ async function SubmissionsTable({ id }: { id: number }) {
     });
   });
 
-
-
   return (
     <>
-      <h1 className="text-2xl font-bold my-4">Submissions</h1>
+      <h1 className="my-4 text-2xl font-bold">Submissions</h1>
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -146,16 +156,22 @@ async function SubmissionsTable({ id }: { id: number }) {
                   {column.label}
                 </TableHead>
               ))}
-              <TableHead className="text-muted-foreground text-right uppercase">Submitted at</TableHead>
+              <TableHead className="text-right uppercase text-muted-foreground">
+                Submitted at
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {rows.map((row, index) => (
               <TableRow key={index}>
                 {columns.map((column) => (
-                  <RowCell key={column.id} type={column.type} value={row[column.id]} />
+                  <RowCell
+                    key={column.id}
+                    type={column.type}
+                    value={row[column.id]}
+                  />
                 ))}
-                <TableCell className="text-muted-foreground text-right">
+                <TableCell className="text-right text-muted-foreground">
                   {formatDistance(row.submittedAt, new Date(), {
                     addSuffix: true,
                   })}
@@ -166,12 +182,22 @@ async function SubmissionsTable({ id }: { id: number }) {
         </Table>
       </div>
     </>
-  );;
+  );
 }
-
 
 function RowCell({ type, value }: { type: ElementsType; value: string }) {
   let node: ReactNode = value;
+  switch (type) {
+    case "DateField":
+      if (!value) break;
+      const date = new Date(value);
+      node = <Badge variant={"outline"}>{format(date, "dd/MM/yyyy")}</Badge>;
+      break;
+    case "CheckboxField":
+      const checked = value === "true";
+      node = <Checkbox checked={checked} disabled />;
+      break;
+  }
 
   return <TableCell>{node}</TableCell>;
 }
