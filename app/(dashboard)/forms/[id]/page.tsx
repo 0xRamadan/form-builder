@@ -22,6 +22,12 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 
 
+export const metadata = {
+  title: 'Form Page',
+  description: "A form page where you can see insights about your form, total submission, total visits, etc..",
+}
+
+
 const FormDetailPage = async ({ params }: { params: { id: string } }) => {
   const { id } = params;
 

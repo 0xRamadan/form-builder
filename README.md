@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Project Title
 
-## Getting Started
+Form Builder
 
-First, run the development server:
+## Description
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Form Builder is a full stack application where you can easily create a form with a drag and drop functionality and shareable link to share the form with others, and your will get insights about your form (total submission, total visits, bounce rate, submission rate).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Technologies Used
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Next.js 14 with AppRouter
+- Dnd-kit library
+- ServerActions
+- Typescript
+- Tailwindcss / Shadcn UI
+- Vercel PostgreSQL
+- Prisma as ORM
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Installation
 
-## Learn More
+1. Clone the repository: `git clone <repository_url>`
+2. Change to the project directory: `cd project-directory`
+3. Install dependencies: `npm install`
 
-To learn more about Next.js, take a look at the following resources:
+## Configuration
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Rename the `.env.example` file to `.env`.
+2. Update the environment variables in the `.env` file with your own configuration.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Usage
 
-## Deploy on Vercel
+1. Start the development server: `npm run dev`
+2. Open your browser and navigate to `http://localhost:3000`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The project is deployed on Vercel. You can access it at [Project URL](https://form-builder-0xramadan.vercel.app/).
+
+## Features
+
+- Fully Responsive
+- Create forms with a stunning drag and drop designer
+- Layout fields: Title, SubTitle, Spacer, Separator, Paragraph.
+- Form fields: Text, Number, Select, Date, Checkbox, Textarea
+- Form preview dialog: you can preview your form before publish it.
+- Share form url 
+- Form submission/validation
+- Form stats: visits and submissions
+
+## How to Contribute
+
+If you would like to contribute to this project, follow the steps below:
+
+1. Fork the repository.
+2. Create a new branch: `git checkout -b feature/your-feature-name`
+3. Make your changes.
+4. Commit your changes: `git commit -m "Add your commit message"`
+5. Push to the branch: `git push origin feature/your-feature-name`
+6. Submit a pull request.
+
+## Resources
+
+- Link to the YouTube tutorial: [Tutorial Title](https://www.youtube.com/watch?v=QGXUUXy0AMw)
+- Repository: [GitHub Repo](https://github.com/Kliton/yt_pageform)
+
+## Credits
+
+Special thanks to [@Kliton](https://github.com/Kliton) for creating this project and providing the helpful tutorial on YouTube.
